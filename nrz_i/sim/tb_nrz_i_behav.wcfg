@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="tb_nrz_i_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="tb_nrz_i" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
+      <ZoomEndTime time="3,034.711 ns"></ZoomEndTime>
+      <Cursor1Time time="1,700.000 ns"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="136"></NameColumnWidth>
+      <ValueColumnWidth column_width="169"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="11" />
+   <wvobject fp_name="/tb_nrz_i/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_nrz_i/rst" type="logic">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_nrz_i/start" type="logic">
+      <obj_property name="ElementShortName">start</obj_property>
+      <obj_property name="ObjectShortName">start</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_nrz_i/data_in" type="array">
+      <obj_property name="ElementShortName">data_in[15:0]</obj_property>
+      <obj_property name="ObjectShortName">data_in[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_nrz_i/nrz_out" type="logic">
+      <obj_property name="ElementShortName">nrz_out</obj_property>
+      <obj_property name="ObjectShortName">nrz_out</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_nrz_i/bit_indx" type="other">
+      <obj_property name="ElementShortName">bit_indx</obj_property>
+      <obj_property name="ObjectShortName">bit_indx</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_nrz_i/N_BITS" type="other">
+      <obj_property name="ElementShortName">N_BITS</obj_property>
+      <obj_property name="ObjectShortName">N_BITS</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_nrz_i/CLK_PERIOD" type="other">
+      <obj_property name="ElementShortName">CLK_PERIOD</obj_property>
+      <obj_property name="ObjectShortName">CLK_PERIOD</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_nrz_i/BIT_PERIOD" type="other">
+      <obj_property name="ElementShortName">BIT_PERIOD</obj_property>
+      <obj_property name="ObjectShortName">BIT_PERIOD</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_nrz_i/CYCLES_PER_BIT" type="other">
+      <obj_property name="ElementShortName">CYCLES_PER_BIT</obj_property>
+      <obj_property name="ObjectShortName">CYCLES_PER_BIT</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_nrz_i/INPUT_BITS" type="array">
+      <obj_property name="ElementShortName">INPUT_BITS[15:0]</obj_property>
+      <obj_property name="ObjectShortName">INPUT_BITS[15:0]</obj_property>
+   </wvobject>
+</wave_config>
