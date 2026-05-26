@@ -17,17 +17,17 @@ VGA/
 
 Este subprojeto modifica dois arquivos do projeto base (`nrz_i/`):
 
-- **`src/top_nrz_i_basys3.vhd`** — Inclui entrada de clock (`clk` a 100 MHz), portas VGA (`vgaRed`, `vgaGreen`, `vgaBlue`, `Hsync`, `Vsync`), gerador de sincronismo VGA com divisor de clock por 4 (100 MHz para ~25 MHz), e serialização temporizada dos 16 níveis NRZ-I com `CYCLES_PER_BIT` = 200.000.000 (2 segundos por bit)
-- **`constraints/basys3_nrz_i.xdc`** — Adiciona ao constraint base o mapeamento do clock (W5), dos 12 pinos de cor VGA (4 bits por canal: R, G, B), e dos sinais de sincronismo Hsync (P19) e Vsync (R19)
+- **`src/top_nrz_i_basys3.vhd`** — Estendido com suporte a clock, gerador de sincronismo VGA e lógica de serialização temporizada. Exibe cada bit como cor de tela inteira por 2 segundos, do SW15 ao SW0
+- **`constraints/basys3_nrz_i.xdc`** — Estendido com o mapeamento do clock da placa e dos pinos do conector VGA. Os demais arquivos são idênticos aos do projeto principal.
 
-O arquivo `src/nrz_i.vhd` e o testbench `sim/tb_nrz_i.vhd` são idênticos aos do projeto principal.
 
 ## Arquivos de código
 
-- **`src/nrz_i.vhd`** — Encoder NRZ-I com FSM (idêntico ao projeto principal)
-- **`src/top_nrz_i_basys3.vhd`** — Top-level com lógica combinacional para LEDs, gerador VGA e serialização temporizada com troca de cor a cada 2 segundos
+- **`src/nrz_i.vhd`** — Encoder NRZ-I (idêntico ao projeto principal)
+- **`src/top_nrz_i_basys3.vhd`** — Top-level com saída para LEDs, gerador VGA e serialização temporizada por bit
 - **`sim/tb_nrz_i.vhd`** — Testbench do encoder (idêntico ao projeto principal)
-- **`constraints/basys3_nrz_i.xdc`** — Mapeamento de `sw[15:0]`, `led[15:0]`, `clk`, pinos VGA e sincronismo
+- **`constraints/basys3_nrz_i.xdc`** — Mapeamento de pinos da Basys 3, incluindo clock e conector VGA
+
 
 ## Por onde começar
 
