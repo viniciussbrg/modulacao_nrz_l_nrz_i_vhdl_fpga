@@ -25,12 +25,10 @@ nrz_l/
 ### Simulação rápida
 
 1. Abra o Vivado
-2. No Tcl Console, navegue até `vivado_project/` e execute:
-   ```tcl
-   source create_project.tcl
-   ```
-3. Clique em `Run Simulation` → `Run Behavioral Simulation`
-4. Observe `nrz_out` no waveform e verifique que cada bit da sequência de entrada aparece diretamente como nível alto ou baixo na saída
+2. Abra o Tcl Console pelo menu **View → Tcl Console**
+3. Navegue até `vivado_project/` e execute o script (veja a seção [Recriar o projeto Vivado](#recriar-o-projeto-vivado) para o passo a passo completo)
+4. Clique em `Run Simulation` → `Run Behavioral Simulation`
+5. Observe `nrz_out` no waveform e verifique que cada bit da sequência de entrada aparece diretamente como nível alto ou baixo na saída
 
 ### Para reproduzir o projeto do zero
 
@@ -80,14 +78,72 @@ Siga esta ordem:
 
 ## Recriar o projeto Vivado
 
-O projeto não está versionado como `.xpr` para evitar dependências de caminho absoluto. O script Tcl reconstrói tudo a partir dos arquivos-fonte:
+O projeto não está versionado como `.xpr` para evitar dependências de caminho absoluto. O script Tcl reconstrói tudo a partir dos arquivos-fonte, com caminhos relativos, funcionando em qualquer máquina.
+
+### Passo a passo no Tcl Console
+
+**1. Abra o Vivado**
+
+Inicie o Vivado normalmente. Não é necessário abrir nenhum projeto — o script cria tudo do zero.
+
+**2. Abra o Tcl Console**
+
+No menu superior, clique em **View → Tcl Console**. O painel abre na parte inferior da janela. Se o Vivado já tiver um projeto aberto, o console aparece automaticamente como aba na barra inferior.
+
+**3. Navegue até a pasta `vivado_project/`**
+
+Na linha de entrada do Tcl Console, digite o comando `cd` com o caminho completo da pasta `vivado_project/` do NRZ-L. Use **chaves** `{ }` para delimitar o caminho — elas evitam problemas com espaços e com a interpretação de caracteres especiais pelo Tcl:
 
 ```tcl
 cd {C:/caminho/para/nrz_l/vivado_project}
+```
+
+> **Atenção:** use sempre barras para frente `/` no caminho, nunca barras invertidas `\`. O Tcl não reconhece `\` como separador de diretório e o comando falha silenciosamente ou com erro de parsing. Mesmo no Windows, o caminho deve ser escrito com `/`.
+
+Exemplo correto:
+```tcl
+cd {C:/Users/aluno/projetos/nrz_l/vivado_project}
+```
+
+Exemplo incorreto (não use):
+```tcl
+cd {C:\Users\aluno\projetos\nrz_l\vivado_project}
+```
+
+**4. Confirme que está no diretório correto**
+
+Antes de executar o script, verifique o diretório atual com:
+
+```tcl
+pwd
+```
+
+O console deve retornar um caminho terminando em `.../nrz_l/vivado_project`. Se retornar outro caminho, repita o passo 3 com o caminho correto.
+
+**5. Execute o script**
+
+```tcl
 source create_project.tcl
 ```
 
-O script cria o projeto na pasta `vivado_project/`, adiciona os fontes de `src/`, o testbench de `sim/` e as constraints de `constraints/` com caminhos relativos, funcionando em qualquer sistema.
+O Vivado processa o script e exibe mensagens de log no console. Aguarde até aparecer a confirmação:
+
+```
+======================================================================
+ Projeto NRZ_L_Basys3 criado com sucesso!
+======================================================================
+```
+
+O projeto abre automaticamente no Vivado após a execução. A partir daí, é possível rodar a simulação, síntese, implementação e geração de bitstream normalmente.
+
+### Problemas comuns
+
+| Erro | Causa | Solução |
+|---|---|---|
+| `couldn't open "create_project.tcl"` | O `cd` foi feito no diretório errado | Verifique com `pwd` e refaça o `cd` apontando para a pasta `vivado_project/` |
+| Caminho não reconhecido ou erro de parsing | Barras invertidas `\` no caminho | Substitua todas as `\` por `/` no comando `cd` |
+| `Part not found` | Device family Artix-7 não instalado no Vivado | Reinstale o Vivado incluindo o suporte a **7 Series** |
+| Projeto criado mas arquivos `.vhd` não encontrados | A pasta `nrz_l/` foi movida ou renomeada após o `cd` | Mantenha a estrutura de pastas intacta e execute o script a partir de `vivado_project/` dentro dela |
 
 ---
 
