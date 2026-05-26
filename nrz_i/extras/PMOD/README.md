@@ -17,37 +17,178 @@ PMOD/
 
 Este subprojeto modifica dois arquivos do projeto base (`nrz_i/`):
 
-- **`src/top_nrz_i_basys3.vhd`** — Agora inclui entrada de clock (`clk` a 100 MHz), porta de saída `pmod_ja1`, e um processo síncrono que serializa os 16 níveis NRZ-I um por vez pelo PMOD, com temporização configurável via `CYCLES_PER_BIT` (padrão: 2.000.000 ciclos = 20 ms por bit, totalizando 320 ms por sequência completa)
-- **`constraints/basys3_nrz_i.xdc`** — Adiciona o mapeamento do clock da Basys 3 (W5, 100 MHz) e do pino PMOD JA1 (J1) ao constraint original de switches e LEDs
+- **`src/top_nrz_i_basys3.vhd`** — Estendido com suporte a clock, porta de saída para o PMOD JA1 e lógica de serialização temporizada. Emite os 16 níveis NRZ-I um por vez pelo pino JA1, com duração de 20 ms por bit (320 ms por sequência completa)
+- **`constraints/basys3_nrz_i.xdc`** — Estendido com o mapeamento do clock da placa e do pino PMOD JA1
 
-O arquivo `src/nrz_i.vhd` e o testbench `sim/tb_nrz_i.vhd` são idênticos aos do projeto principal.
+Os demais arquivos (`src/nrz_i.vhd` e `sim/tb_nrz_i.vhd`) são idênticos aos do projeto principal.
 
 ## Arquivos de código
 
 - **`src/nrz_i.vhd`** — Encoder NRZ-I com FSM (idêntico ao projeto principal)
-- **`src/top_nrz_i_basys3.vhd`** — Top-level com lógica combinacional para LEDs e serialização síncrona para o PMOD JA1
+- **`src/top_nrz_i_basys3.vhd`** — Top-level com saída para LEDs e serialização síncrona para o PMOD JA1
 - **`sim/tb_nrz_i.vhd`** — Testbench do encoder (idêntico ao projeto principal)
-- **`constraints/basys3_nrz_i.xdc`** — Mapeamento de `sw[15:0]`, `led[15:0]`, `clk` e `pmod_ja1`
+- **`constraints/basys3_nrz_i.xdc`** — Mapeamento de pinos da Basys 3, incluindo clock e pino PMOD JA1
 
-## Como usar
+## Por onde começar
 
-### Recriar o projeto no Vivado
+### O que você vai precisar
+
+- Placa Basys 3 conectada ao computador via cabo USB
+- Analog Discovery 3 com o software **WaveForms** instalado, ou qualquer osciloscópio com ponteiras
+- Vivado instalado com suporte a dispositivos **7 Series** (Artix-7)
+
+### Conexão física antes de ligar
+
+Antes de gravar o bitstream, faça as conexões:
+
+1. Localize o conector **PMOD JA** na Basys 3 (lateral esquerda da placa)
+2. Conecte o fio de sinal (canal 1+, laranja no Analog Discovery) ao pino **JA1** (pino superior esquerdo do conector)
+3. Conecte o GND (fio preto) ao pino GND do mesmo conector (pino inferior esquerdo)
+4. Conecte a Basys 3 ao computador via USB e ligue a chave de energia da placa
+
+### Simulação rápida (sem a placa)
+
+Se quiser verificar o comportamento do encoder antes de gravar na placa:
+
+1. Abra o Vivado
+2. Abra o Tcl Console pelo menu **View → Tcl Console**
+3. Navegue até `vivado_project/` e execute o script (veja a seção [Recriar o projeto Vivado](#recriar-o-projeto-vivado) para o passo a passo completo)
+4. Clique em `Run Simulation` → `Run Behavioral Simulation`
+5. Carregue `tb_nrz_i_behav.wcfg` na janela de waveform para visualizar os sinais já configurados
+6. Observe o sinal `nrz_out`: cada bit `1` inverte o nível anterior, cada bit `0` mantém
+
+> A simulação cobre apenas o encoder NRZ-I (`nrz_i.vhd`). A serialização temporizada do top-level e a saída PMOD não são simuladas pelo testbench.
+
+### Gravar na placa e capturar no WaveForms
+
+Com a placa e o Analog Discovery já conectados:
+
+1. No Vivado, com o projeto já aberto, clique em **Run Synthesis**
+2. Após a síntese concluir, clique em **Run Implementation**
+3. Após a implementação, clique em **Generate Bitstream** e aguarde
+4. Clique em **Open Hardware Manager** → **Open Target** → **Auto Connect**
+5. Clique em **Program Device** → selecione `top_nrz_i_basys3.bit` → clique em **Program**
+
+Após a gravação, o sinal NRZ-I aparece imediatamente no pino JA1.
+
+### Configuração do WaveForms para capturar o sinal
+
+**1. Abra o Scope**
+
+No WaveForms, clique em **Scope** na tela inicial do Workspace.
+
+**2. Configure a base de tempo (Time)**
+
+No painel direito, em **Time**:
+- **Position:** `0 s`
+- **Base:** `100 ms/div`
+
+Isso dá uma janela total de ±500 ms, suficiente para visualizar a sequência completa de 16 bits a 20 ms/bit.
+
+**3. Configure o Channel 1**
+
+No painel direito, em **Channel 1 (1±)**:
+- **Offset:** `-1.3 V`
+- **Range:** `1 V/div`
+
+Isso centraliza o sinal entre ~0,3 V e ~3,3 V na tela, compatível com o nível lógico 3,3 V da Basys 3.
+
+**4. Configure o Trigger**
+
+Na barra superior:
+- **Trigger:** `Auto`
+- **Source:** `Channel 1`
+- **Type:** `Edge`
+- **Condition:** `Rising`
+- **Level:** `1.5 V`
+
+O trigger na borda de subida estabiliza a forma de onda na tela.
+
+**5. Configure o Buffer e o Mode**
+
+Na barra superior:
+- **Buffer:** `10`
+- **Mode:** `Repeated`
+
+O modo Repeated mantém a captura contínua, atualizando automaticamente.
+
+**6. Inicie a captura**
+
+Clique em **Run**. Ajuste os switches SW15 a SW0 para definir a sequência de entrada e observe o sinal no osciloscópio.
+
+![Captura WaveForms — NRZ-I](./docs/image.png)
+
+**O que esperar na tela:**
+- Cada bit `1` produz uma **transição** em relação ao nível anterior (inversão)
+- Cada bit `0` mantém o nível atual **sem transição**
+- A sequência completa dura 320 ms e reinicia automaticamente
+
+## Recriar o projeto Vivado
+
+O projeto não está versionado como `.xpr` para evitar dependências de caminho absoluto. O script Tcl reconstrói tudo a partir dos arquivos-fonte, com caminhos relativos, funcionando em qualquer máquina.
+
+### Passo a passo no Tcl Console
+
+**1. Abra o Vivado**
+
+Inicie o Vivado normalmente. Não é necessário abrir nenhum projeto — o script cria tudo do zero.
+
+**2. Abra o Tcl Console**
+
+No menu superior, clique em **View → Tcl Console**. O painel abre na parte inferior da janela. Se o Vivado já tiver um projeto aberto, o console aparece automaticamente como aba na barra inferior.
+
+**3. Navegue até a pasta `vivado_project/`**
+
+Use **chaves** `{ }` para delimitar o caminho:
 
 ```tcl
 cd {C:/caminho/para/nrz_i/extras/PMOD/vivado_project}
+```
+
+> **Atenção:** use sempre barras para frente `/` no caminho, nunca barras invertidas `\`. O Tcl não reconhece `\` como separador de diretório e o comando falha silenciosamente ou com erro de parsing. Mesmo no Windows, o caminho deve ser escrito com `/`.
+
+Exemplo correto:
+```tcl
+cd {C:/Users/aluno/projetos/nrz_i/extras/PMOD/vivado_project}
+```
+
+Exemplo incorreto (não use):
+```tcl
+cd {C:\Users\aluno\projetos\nrz_i\extras\PMOD\vivado_project}
+```
+
+**4. Confirme que está no diretório correto**
+
+```tcl
+pwd
+```
+
+O console deve retornar um caminho terminando em `.../PMOD/vivado_project`. Se retornar outro caminho, repita o passo 3.
+
+**5. Execute o script**
+
+```tcl
 source create_project.tcl
 ```
 
-### Conexão com o Analog Discovery 3
+Aguarde até aparecer a confirmação:
 
-1. Conecte o canal 1+ (fio laranja) do Analog Discovery ao pino **JA1** do conector PMOD da Basys 3
-2. Conecte o GND (fio preto) ao GND do PMOD
-3. No **WaveForms**, abra o **Scope** e configure:
-   - Time base: ~50 ms/div para visualizar a sequência completa
-   - Trigger: borda de subida no canal 1
-4. Grave o bitstream na placa e ajuste os switches para definir a entrada
+```
+======================================================================
+ Projeto NRZ_I_PMOD criado com sucesso!
+======================================================================
+```
 
-### Ajuste de velocidade
+### Problemas comuns
+
+| Erro | Causa | Solução |
+|---|---|---|
+| `couldn't open "create_project.tcl"` | O `cd` foi feito no diretório errado | Verifique com `pwd` e refaça o `cd` apontando para `PMOD/vivado_project/` |
+| Caminho não reconhecido ou erro de parsing | Barras invertidas `\` no caminho | Substitua todas as `\` por `/` no comando `cd` |
+| `Part not found` | Device family Artix-7 não instalado | Reinstale o Vivado incluindo o suporte a **7 Series** |
+| Nenhum sinal no osciloscópio | Conexão incorreta no PMOD | Verifique que o fio está no pino JA1 (superior esquerdo) e o GND no inferior esquerdo |
+
+## Ajuste de velocidade
 
 A constante `CYCLES_PER_BIT` no `top_nrz_i_basys3.vhd` controla a duração de cada bit na saída serial:
 
