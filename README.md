@@ -1,13 +1,13 @@
 # Modulação Digital NRZ-L e NRZ-I em VHDL
 
-Trabalho prático da disciplina de **Comunicação de Dados e Sistemas Reconfiguráveis**, semestre 2026/1.
+Trabalho prático da disciplina de **Comunicação de Dados e Sistemas Reconfiguráveis**, ministrada pelo Prof. Dr. Vinicius Borges. Semestre 2026/1.
 
 ## Integrantes
 
-- Alex Akio Nishimura Junior - 081230007
-- Ana Marta Souza - 082230041
-- Maria Eduarda Ferreira Bianchini - 081230001
-- Pedro Henrique Rodrigues de Assis - 081230018
+- Alex Akio Nishimura Junior — 081230007
+- Ana Marta Souza — 082230041
+- Maria Eduarda Ferreira Bianchini — 081230001
+- Pedro Henrique Rodrigues de Assis — 081230018
 
 ## Descrição
 
@@ -49,7 +49,7 @@ modulacao_nrz_l_nrz_i_vhdl_fpga/
 └── README.md
 ```
 
-Cada projeto (NRZ-L e NRZ-I) é autocontido: possui seus próprios fontes, testbench, constraints, script Tcl para recriar o projeto no Vivado, e bitstream já compilado. Os extras PMOD e VGA dentro de cada projeto seguem a mesma estrutura e são igualmente independentes.
+Cada projeto é autocontido: possui seus próprios fontes, testbench, constraints, script Tcl para recriar o projeto no Vivado e bitstream já compilado. Os extras PMOD e VGA seguem a mesma estrutura e são igualmente independentes.
 
 ## Projetos
 
@@ -66,15 +66,15 @@ Cada projeto (NRZ-L e NRZ-I) é autocontido: possui seus próprios fontes, testb
 
 - **Vivado 2025.2** — síntese, implementação, simulação (XSim) e geração de bitstream
 - **Basys 3** — placa FPGA com Artix-7 XC7A35T-1CPG236C
-- **Analog Discovery 3 + WaveForms** — captura de forma de onda via PMOD
-- **Monitor VGA** — visualização da modulação por cores
+- **Analog Discovery 3 + WaveForms** — captura de forma de onda via PMOD (atividade extra)
+- **Monitor VGA** — visualização da modulação por cores (atividade extra)
 
 ## Como começar
 
-Recomenda-se iniciar pelo projeto NRZ-L, por ser a codificação mais direta. Acesse a pasta [nrz_l/](./nrz_l/) e siga o README local, que explica como recriar o projeto no Vivado, simular e gravar na placa. Em seguida, avance para o [nrz_i/](./nrz_i/) e compare as diferenças na lógica de codificação.
+Recomenda-se iniciar pelo projeto NRZ-L, por ser a codificação mais direta. Acesse a pasta [nrz_l/](./nrz_l/) e siga o README local, que contém a teoria da codificação, o passo a passo para recriar o projeto no Vivado, simular e gravar na placa. Em seguida, avance para o [nrz_i/](./nrz_i/) e compare as diferenças na lógica de codificação.
 
-Para recriar qualquer projeto no Vivado, basta navegar até a pasta `vivado_project/` correspondente e executar `source create_project.tcl` no Tcl Console (os READMEs locais explicam detalhadamente como realizar esse procedimento). Nenhum `.xpr` está versionado; os scripts Tcl geram o projeto com caminhos relativos, funcionando em qualquer máquina.
+Para recriar qualquer projeto no Vivado, navegue até a pasta `vivado_project/` correspondente e execute `source create_project.tcl` no Tcl Console. Os READMEs locais de cada projeto explicam esse procedimento em detalhes, incluindo como abrir o console e os erros mais comuns.
 
 ---
 
-<div align="center">CEFSA - 2026</div>
+<div align="center">CEFSA — 2026</div>
