@@ -1,0 +1,24 @@
+#-----------------------------------------------------------
+# Vivado v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Mon May 18 21:56:26 2026
+# Process ID         : 2232
+# Current directory  : C:/Users/081230013/Downloads/nrz_l_modulacao/nrz_l_modulacao.runs/synth_1
+# Command line       : vivado.exe -log nrz_l.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source nrz_l.tcl
+# Log file           : C:/Users/081230013/Downloads/nrz_l_modulacao/nrz_l_modulacao.runs/synth_1/nrz_l.vds
+# Journal file       : C:/Users/081230013/Downloads/nrz_l_modulacao/nrz_l_modulacao.runs/synth_1\vivado.jou
+# Running On         : CE-LAB6909
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 26200
+# Processor Detail   : 12th Gen Intel(R) Core(TM) i5-12500
+# CPU Frequency      : 2995 MHz
+# CPU Physical cores : 6
+# CPU Logical cores  : 12
+# Host memory        : 16881 MB
+# Swap memory        : 1073 MB
+# Total Virtual      : 17955 MB
+# Available Virtual  : 2435 MB
+#-----------------------------------------------------------
+source nrz_l.tcl -notrace
