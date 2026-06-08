@@ -84,12 +84,17 @@ Detalhes completos no [guia de documentação](./guia_documentacao.pdf).
 
 ## Entregas dos grupos
 
-À medida que as entregas forem aprovadas, esta seção será atualizada com os links das branches:
+Entregas aprovadas e incorporadas no repositório:
 
-<!-- Exemplo (será preenchido ao longo do semestre):
-- [Grupo 1](../../tree/grupo1) — Nome 1, Nome 2
-- [Grupo 2](../../tree/grupo2) — Nome 3, Nome 4
--->
+- [Grupo 1](../../tree/grupo1) — Edgar Camacho, Henrico Birochi, Nicholas Birochi, Vitor Braghttoni
+- [Grupo 2](../../tree/grupo2) — Matheus Mitsuo, Nicolas Gomes Lima, Júlio César Caberlino, Alex Saifi, Felipe Medeiros
+- [Grupo 3](../../tree/grupo3) — André Mendes, Felipe Lira, Pedro Henrique Simões, Vinicius Yamaguti
+- [Grupo 4](../../tree/grupo4) — Alex Akio Nishimura Junior, Ana Marta Souza, Maria Eduarda Ferreira Bianchini, Pedro Henrique Rodrigues de Assis
+- [Grupo 5](../../tree/grupo5) — Aline Cristina Ribeiro de Barros, Luis Gustavo de Oliveira Carneiro, Roger Rocha da Silva, João Victor Pereira Andrade, Samar Victor Vieira Souza
+- [Grupo 6](../../tree/grupo6) — Gustavo Trindade Rodrigues, Lucas Barboza Silva, Victor Oliveira Malvão, Matheus Gonçalves Nunes
+- [Grupo 7](../../tree/grupo7) — Arthur Destro, Gustavo Zaccheu, Gustavo Mauriz, Vinicius Strazzza, Vitor Barbosa
+- [Grupo 8](../../tree/grupo8) — Henrique Alves Ferreira, Gabriel Melo Santos, Matheus da Silva Souza, Rafael Ruppert Barrocal
+- [Grupo 9](../../tree/grupo9) — Caio Alexandre Rossi, Caio S. A. de Araújo
 
 ## Observações
 
